@@ -6,7 +6,8 @@ Features:
 - Sign in
 - Sign up
 - Logout
+- show loading on request
 
 TODO :
-- show loading on request
+
 - use Provider for state management 
