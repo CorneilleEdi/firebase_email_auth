@@ -1,11 +1,10 @@
 import 'package:email_auth/auth/auth_service.dart';
+import 'package:email_auth/pages/widgets/common.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class LoginPage extends StatefulWidget {
-  LoginPage({Key key, this.title}) : super(key: key);
-
-  final String title;
+  LoginPage({Key key}) : super(key: key);
 
   @override
   _LoginPageState createState() => _LoginPageState();
@@ -25,7 +24,7 @@ class _LoginPageState extends State<LoginPage> {
     auth.getUser.then(
       (user) {
         if (user != null) {
-          Navigator.pushReplacementNamed(context, '/main');
+          Navigator.pushReplacementNamed(context, '/main', arguments: user);
         }
       },
     );
@@ -37,6 +36,8 @@ class _LoginPageState extends State<LoginPage> {
     _passwordController.dispose();
     super.dispose();
   }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +52,7 @@ class _LoginPageState extends State<LoginPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Text(
-                  widget.title,
+                  "Login",
                   style: TextStyle(fontSize: 48, fontWeight: FontWeight.bold),
                 ),
                 Text(
@@ -91,12 +92,16 @@ class _LoginPageState extends State<LoginPage> {
                     //Hide keybord to show snackbar on error
                     FocusScope.of(context).requestFocus(FocusNode());
 
+                    showLoading(context);
                     var user = await auth.signInWithEmailPassword(
                         _emailController.text.trim(),
                         _passwordController.text.trim());
                     if (user != null) {
-                      Navigator.pushReplacementNamed(context, '/main');
+                      dismissLoading(context);
+                      Navigator.pushReplacementNamed(context, '/main',
+                          arguments: user);
                     } else {
+                      dismissLoading(context);
                       _scaffoldKey.currentState.showSnackBar(SnackBar(
                           content: new Text('Login error, please try again')));
                     }

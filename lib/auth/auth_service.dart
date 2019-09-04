@@ -13,6 +13,7 @@ class AuthService {
 
       FirebaseUser user = result.user;
 
+
       return user;
     } catch (error) {
       print(error);

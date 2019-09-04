@@ -1,11 +1,8 @@
 import 'package:email_auth/auth/auth_service.dart';
+import 'package:email_auth/pages/widgets/common.dart';
 import 'package:flutter/material.dart';
 
 class RegistrationPage extends StatefulWidget {
-  final String title;
-
-  RegistrationPage({this.title});
-
   @override
   _RegistrationPageState createState() => _RegistrationPageState();
 }
@@ -39,7 +36,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Text(
-                  widget.title,
+                  "Registration",
                   style: TextStyle(fontSize: 48, fontWeight: FontWeight.bold),
                 ),
                 Text(
@@ -78,15 +75,19 @@ class _RegistrationPageState extends State<RegistrationPage> {
                     //Hide keybord to show snackbar on error
                     FocusScope.of(context).requestFocus(FocusNode());
 
+                    showLoading(context);
                     var user = await auth.createUserWithEmailAndPassword(
                         _emailController.text.trim(),
                         _passwordController.text.trim());
                     if (user != null) {
                       //If user is created, first remove until '/' and go to main
+                      dismissLoading(context);
+
                       Navigator.of(context)
                           .pushNamedAndRemoveUntil('/', (route) => false);
-                      Navigator.pushReplacementNamed(context, '/main');
                     } else {
+                      dismissLoading(context);
+
                       _scaffoldKey.currentState.showSnackBar(SnackBar(
                           content: new Text('Login error, please try again')));
                     }

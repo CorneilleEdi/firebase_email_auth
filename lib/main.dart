@@ -1,6 +1,7 @@
 import 'package:email_auth/pages/login_page.dart';
 import 'package:email_auth/pages/main_page.dart';
 import 'package:email_auth/pages/registration_page.dart';
+import 'package:email_auth/route_generator.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(MyApp());
@@ -12,6 +13,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Firebase Email Auth',
+
       theme: ThemeData(
         primarySwatch: Colors.blue,
         primaryColor: Color(0XFF6D3FFF),
@@ -20,12 +22,10 @@ class MyApp extends StatelessWidget {
         brightness: Brightness.light,
         buttonTheme: ButtonThemeData(),
       ),
-      // Named Routes
-      routes: {
-        '/': (context) => LoginPage(title: "Login"),
-        '/registration': (context) => RegistrationPage(title: "Registration"),
-        '/main': (context) => MainPage(title: "Main Page"),
-      },
+
+      // Generate dNamed Routes
+      initialRoute: '/',
+      onGenerateRoute: RouteGenerator.generateRoute,
     );
   }
 }

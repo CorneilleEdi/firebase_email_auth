@@ -1,11 +1,12 @@
 import 'package:email_auth/auth/auth_service.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class MainPage extends StatefulWidget {
-  final String title;
+  final FirebaseUser user;
 
-  MainPage({this.title});
+  MainPage({this.user});
 
   @override
   _MainPageState createState() => _MainPageState();
@@ -23,7 +24,7 @@ class _MainPageState extends State<MainPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: Text('Main'),
       ),
       body: Center(
           child: Container(
@@ -31,6 +32,15 @@ class _MainPageState extends State<MainPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            Text(
+              'Email : ${widget.user.email}',
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(height: 16,),
+            Text('Username : ${widget.user.email.split('@')[0]}',  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
+            SizedBox(
+              height: 42,
+            ),
             MaterialButton(
               onPressed: () async {
                 await auth.signOut();
