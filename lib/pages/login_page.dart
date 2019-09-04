@@ -1,7 +1,6 @@
 import 'package:email_auth/auth/auth_service.dart';
 import 'package:email_auth/pages/widgets/common.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key key}) : super(key: key);
@@ -21,6 +20,8 @@ class _LoginPageState extends State<LoginPage> {
   @override
   void initState() {
     super.initState();
+
+    //Check auth on login page
     auth.getUser.then(
       (user) {
         if (user != null) {
